@@ -28,7 +28,7 @@ Route::middleware(['auth', 'check.user'])->group(function () {
     Route::get('/news', [NewsController::class, 'showUserNews'])->name('news');
     Route::get('/FAQ', [FeedbackController::class, 'showFaqForm'])->name('faq');
     Route::post('/FAQ', [FeedbackController::class, 'storeFeedback']);
-
+    
 });
 
 Route::middleware(['auth', 'check.admin'])->group(function () {
@@ -38,6 +38,7 @@ Route::middleware(['auth', 'check.admin'])->group(function () {
     Route::get('/admin', [FeedbackController::class, 'showFeedbacks'])->name('adminDashboard');
     Route::get('/admin/news', [NewsController::class, 'showAdminNews'])->name('adminNews');
     Route::post('/admin/news', [NewsController::class, 'storeNews']);
+    Route::delete('/admin/news/{id}', [NewsController::class, 'destroy'])->name('adminNewsDelete');
 });
 
 Route::post('/logout', [AccountController::class, 'logout'])->name('logout');

@@ -68,8 +68,14 @@ text-warning text-secondary fw-bold
     </div>
   @else
     @foreach ($news as $item) 
-    <div class="container-fluid bg-white p-2 mb-2 shadow-sm">
-    {{ $item->title }} ({{ $item->created_at }})
+    <div class="container-fluid bg-white p-2 mb-2 shadow-sm d-flex justify-content-between">
+    <span class="">{{ $item->title }} ({{ $item->created_at }})</span>
+    <span>
+      <form action="{{ route('adminNewsDelete', $item->id) }}" method="POST" style="display:inline;">
+      @csrf
+      @method('DELETE')
+      <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus berita ini?')">Delete</button>
+    </span>
     </div>
   @endforeach
   @endif

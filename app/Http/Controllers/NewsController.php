@@ -23,7 +23,7 @@ class NewsController extends Controller
             'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $imageName = date('Y-m-d-H-i-s').'.'.$request->picture->extension();
+        $imageName = date('Y-m-d-H-i-s') . '.' . $request->picture->extension();
         $request->picture->move(public_path('images/news'), $imageName);
 
         $news = new News();
@@ -40,5 +40,15 @@ class NewsController extends Controller
     {
         $news = News::orderBy('id', 'desc')->get();
         return view('user.news', compact('news'));
+    }
+
+    public function destroy($id)
+    {
+        $news = News::findOrFail($id);
+        if (file_exists(public_path('images/news/' . $news->picture))) {
+            unlink(public_path('images/news/' . $news->picture));
+        }
+        $news->delete();
+        return redirect()->route('adminNews')->with('success', 'News deleted successfully.');
     }
 }
