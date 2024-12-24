@@ -6,30 +6,45 @@ text-warning text-secondary fw-bold
 
 @section('content')
 <div class="py-2 px-4">
-  <form id="postForm">
+  @if (session('success'))
+    <div>
+    {{ session('success') }}
+    </div>
+  @endif
+  @if ($errors->any())
+    <div>
+    <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+    @endforeach
+    </ul>
+    </div>
+  @endif
+  <form action="{{route('adminNews')}}" method="post" enctype="multipart/form-data">
+    @csrf
     <table>
       <tr>
         <td>
-          <label for="judul" class="">Judul Berita:</label>
+          <label for="title" class="">Judul Berita:</label>
         </td>
-        <td class="">
-          <input type="text" class="bg-warning w-100" name="judul" id="judul" required />
+        <td>
+          <input type="text" class="bg-warning w-100" name="title" id="title" required />
         </td>
       </tr>
       <tr>
         <td>
-          <label for="isiBerita" class="">Deskripsi Singkat:</label>
+          <label for="description" class="">Deskripsi Singkat:</label>
         </td>
         <td>
-          <input type="text" class="bg-warning w-100" name="isiBerita" id="isiBerita" required />
+          <input type="text" class="bg-warning w-100" name="description" id="description" required />
         </td>
       </tr>
       <tr>
         <td>
-          <label for="gambar" class="">Unggah gambar:</label>
+          <label for="picture" class="">Unggah gambar:</label>
         </td>
         <td>
-          <input type="file" class="" name="gambar" id="gambar" accept="image/*" required />
+          <input type="file" class="" name="picture" id="picture" required />
         </td>
       </tr>
       <tr>
@@ -42,14 +57,21 @@ text-warning text-secondary fw-bold
         </td>
       </tr>
     </table>
-    <button type="button" id="postBtn" class="btn btn-primary mt-3">
+    <button type="submit" class="btn btn-primary mt-3">
       Tambahkan
     </button>
   </form>
-  <hr class="text-white" />
-  <div class="noPostTarget d-flex justify-content-center">
-    <span class="text-dark">Belum ada berita yang dibuat</span>
-  </div>
-  
+  <hr class="text-secondary" />
+  @if ($news->isEmpty())
+    <div class="d-flex justify-content-center">
+    <p class="text-secondary">Belum ada berita yang dibuat</p>
+    </div>
+  @else
+    @foreach ($news as $item) 
+    <div class="container-fluid bg-white p-2 mb-2 shadow-sm">
+    {{ $item->title }} ({{ $item->created_at }})
+    </div>
+  @endforeach
+  @endif
 </div>
 @endsection

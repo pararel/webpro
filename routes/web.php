@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\NewsController;
 
 Route::get('/signup', [AccountController::class, 'showSignupForm'])->name('signup');
 Route::post('/signup', [AccountController::class, 'signup']);
@@ -24,22 +25,19 @@ Route::middleware(['auth', 'check.user'])->group(function () {
     Route::get('/community', function () {
         return view('user.community');
     })->name('community');
-    Route::get('/news', function () {
-        return view('user.news');
-    })->name('news');
+    Route::get('/news', [NewsController::class, 'showUserNews'])->name('news');
     Route::get('/FAQ', [FeedbackController::class, 'showFaqForm'])->name('faq');
     Route::post('/FAQ', [FeedbackController::class, 'storeFeedback']);
 
 });
 
 Route::middleware(['auth', 'check.admin'])->group(function () {
-    Route::get('/admin/news', function () {
-        return view('admin.news');
-    })->name('adminNews');
     Route::get('/admin/community', function () {
         return view('admin.community');
     })->name('adminCommunity');
     Route::get('/admin', [FeedbackController::class, 'showFeedbacks'])->name('adminDashboard');
+    Route::get('/admin/news', [NewsController::class, 'showAdminNews'])->name('adminNews');
+    Route::post('/admin/news', [NewsController::class, 'storeNews']);
 });
 
 Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
@@ -47,3 +45,5 @@ Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
 Route::get('/', function () {
     return view('main.welcome');
 })->name('welcome');
+
+
