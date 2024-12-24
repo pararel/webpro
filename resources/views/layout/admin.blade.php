@@ -1,5 +1,9 @@
 @extends('layout.app')
 
+@section('dashboard')
+active
+@endsection
+
 @section('page')
 Admin
 @endsection

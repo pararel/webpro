@@ -48,26 +48,8 @@ text-warning text-secondary fw-bold
   </form>
   <hr class="text-white" />
   <div class="noPostTarget d-flex justify-content-center">
-    <span class="text-white">Belum ada berita yang dibuat</span>
+    <span class="text-dark">Belum ada berita yang dibuat</span>
   </div>
-  <div id="postContainer"></div>
-  <div id="confirmDialog" class="modal" tabindex="-1" style="display: none">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Konfirmasi Hapus</h5>
-        </div>
-        <div class="modal-body">
-          <p>Apakah kamu yakin ingin menghapus ini?</p>
-        </div>
-        <div class="modal-footer">
-          <button id="confirmYes" class="btn btn-danger">Ya</button>
-          <button id="confirmNo" class="btn btn-secondary" data-dismiss="modal">
-            Tidak
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 </div>
 @endsection
