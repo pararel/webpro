@@ -1,13 +1,15 @@
 @extends('layout.app')
 
-
 @section('page')
 Bantuan
 @endsection
 
-
 @section('routeDashboard')
 {{route('dashboard')}}
+@endsection
+
+@section('routeSettings')
+{{route('settings')}}
 @endsection
 
 @section('nav')

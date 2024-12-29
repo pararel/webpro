@@ -74,7 +74,9 @@ text-warning text-secondary fw-bold
       <form action="{{ route('adminNewsDelete', $item->id) }}" method="POST" style="display:inline;">
       @csrf
       @method('DELETE')
-      <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus berita ini?')">Delete</button>
+      <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus berita ini?')">
+        <i class="far fa-trash-alt"></i>
+      </button>
     </span>
     </div>
   @endforeach

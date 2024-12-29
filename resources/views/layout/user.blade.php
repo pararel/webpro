@@ -4,6 +4,10 @@
 {{route('dashboard')}}
 @endsection
 
+@section('routeSettings')
+{{route('settings')}}
+@endsection
+
 @section('dashboard')
 active
 @endsection

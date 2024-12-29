@@ -8,6 +8,14 @@ active
 Admin
 @endsection
 
+@section('routeSettings')
+{{route('adminSettings')}}
+@endsection
+
+@section('routeDashboard')
+{{route('adminDashboard')}}
+@endsection
+
 @section('buttons')
 <a class="btn-riwayat btn btn-transparent @yield('btnMasukan') text-secondary" href="{{route('adminDashboard')}}">
   Masukan

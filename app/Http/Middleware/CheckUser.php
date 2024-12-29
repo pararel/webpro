@@ -11,12 +11,10 @@ class CheckUser
     {
         $user = Auth::user();
 
-        // Cek apakah pengguna bukan admin
         if ($user->is_admin === 'no') {
             return $next($request);
         }
 
-        // Jika pengguna adalah admin, arahkan ke dashboard admin
         return redirect()->route('adminDashboard');
     }
 }
