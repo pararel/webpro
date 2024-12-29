@@ -37,4 +37,15 @@ class PostController extends Controller
             return redirect()->route('community')->with('success', 'Profile updated successfully.');
         }
     }
+
+    public function destroy($id)
+    {
+        $posts = Post::findOrFail($id);
+        $posts->delete();
+        if (Auth::user()->is_admin === 'yes') {
+            return redirect()->route('adminCommunity')->with('success', 'Posts deleted successfully.');
+        } else {
+            return redirect()->route('community')->with('success', 'Posts deleted successfully.');
+        }
+    }
 }

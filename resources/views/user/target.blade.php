@@ -5,46 +5,47 @@ text-warning text-secondary fw-bold
 @endsection
 
 @section('content')
-<div class="p-2">
-  <form id="postForm">
+<div class="py-2 px-4">
+  <form method="post" action="{{route('targetStore')}}">
+    @csrf
     <table>
       <tr>
         <td>
-          <label for="golongan" class="">Golongan Rumah Tangga:</label>
+          <label for="type" class="">Golongan Rumah Tangga:</label>
         </td>
         <td>
-          <select class="bg-warning w-100" name="golongan" id="golongan">
-            <option value="1352">R-1/ TR daya 900 VA</option>
-            <option value="1444.7">R-1/ TR daya 1.300 VA</option>
-            <option value="1444.7">R-1/ TR daya 2.200 VA</option>
-            <option value="1699.53">
+          <select class=" w-100" name="type" id="type" required>
+            <option value="a">R-1/ TR daya 900 VA</option>
+            <option value="b">R-1/ TR daya 1.300 VA</option>
+            <option value="c">R-1/ TR daya 2.200 VA</option>
+            <option value="d">
               R-2/ TR daya 3.500-5.500 VA
             </option>
-            <option value="1699.53">
+            <option value="e">
               R-3/ TR daya 6.600 VA ke atas
             </option>
-            <option value="1444.7">
+            <option value="f">
               B-2/ TR daya 6.600 VA-200 kVA
             </option>
-            <option value="1114.74">
+            <option value="g">
               B-3/ Tegangan Menengah (TM) daya di atas 200 kVA
             </option>
-            <option value="1114.74">
+            <option value="h">
               I-3/ TM daya di atas 200 kVA
             </option>
-            <option value="996.74">
+            <option value="i">
               I-4/ Tegangan Tinggi (TT) daya 30.000 kVA ke atas
             </option>
-            <option value="1699.53">
+            <option value="j">
               P-1/ TR daya 6.600 VA-200 kVA
             </option>
-            <option value="1522.88">
+            <option value="k">
               P-2/ TM daya di atas 200 kVA
             </option>
-            <option value="1699.53">
+            <option value="l">
               P-3/ TR untuk penerangan jalan umum
             </option>
-            <option value="1644.52">L/ TR, TM, TT</option>
+            <option value="m">L/ TR, TM, TT</option>
           </select>
         </td>
       </tr>
@@ -53,62 +54,161 @@ text-warning text-secondary fw-bold
           <label for="parameter" class="">Parameter target:</label>
         </td>
         <td>
-          <select class="bg-warning" name="parameter" id="parameter">
-            <option value="target-pemakaian">
-              Pemakaian Listrik
+          <select class="" name="parameter" id="parameter" required>
+            <option value="power">
+              Daya Listrik (kWh)
             </option>
-            <option value="hitung-pemakaian">Biaya Listrik</option>
+            <option value="cost">Biaya Listrik (Rp)</option>
           </select>
         </td>
       </tr>
       <tr>
         <td>
-          <label for="tanggal-awal" class="">Waktu mulai:</label>
+          <label for="start" class="">Waktu mulai:</label>
         </td>
         <td>
-          <input type="date" class="bg-warning" name="tanggal-awal" id="tanggal-awal" required />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <label for="tanggal-akhir" class="">Target waktu:</label>
-        </td>
-        <td>
-          <input type="date" class="bg-warning" name="tanggal-akhir" id="tanggal-akhir" required />
+          <input type="date" class="" name="start" id="start" required />
         </td>
       </tr>
       <tr>
         <td>
-          <label for="angka-target" class="" id="labelAngkaTarget">Target daya (kWh):</label>
+          <label for="end" class="">Waktu akhir:</label>
         </td>
         <td>
-          <input type="text" class="bg-warning" name="angka-target" id="angka-target" inputmode="numeric"
-            oninput="this.value = this.value.replace(/[^0-9]/g, '')" required />
+          <input type="date" class="" name="end" id="end" required />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="value" class="">Nilai target:</label>
+        </td>
+        <td>
+          <input type="text" class="" name="value" id="value" inputmode="numeric"
+            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" required />
         </td>
       </tr>
     </table>
-    <button type="button" id="postBtn" class="btn btn-primary mt-3">
+    <button type="submit" class="btn btn-primary mt-3">
       Tambahkan
     </button>
   </form>
-  <hr class="text-wrning" />
-  <div class="noPostTarget d-flex justify-content-center">
-    <span class="text-secondary">Belum ada target yang dibuat</span>
-  </div>
+  <hr class="text-secondary" />
+  @if ($targets->isEmpty())
+    <div class="d-flex justify-content-center">
+    <p class="text-secondary">Belum ada target yang dibuat</p>
+    </div>
+  @else
+    <div class="overflow-y-auto d-flex justify-content-center" style="height: 90vh">
+    <div class="container-fluid">
+      <div class="row d-flex justify-content-center text-center">
+      @foreach ($targets as $target)
+      <div class="p-2 col-sm-3">
+      <div class="bg-white shadow-sm">
+      <h3>Target #{{$target->id}}</h3>
+      @if ($target->countDays == 0)
+      <span>input pemakaian harian anda di bawah!</span>
+      <div class="d-flex justify-content-center">
+      <div class="progress-circle my-2" id="progressCircle" data-value="0" style="--value: ">
+      <span class="text-secondary fs-1 fw-bold" id="progressText">0%</span>
+      </div>
+      </div>
+    @elseif ($target->usage / $target->countDays < $target->average)
+      <span>Pemakaian hemat, pertahankan!</span>
+      <div class="d-flex justify-content-center">
+      <div class="progress-circle my-2" id="progressCircle"
+      data-value="{{($target->usage / $target->countDays) / $target->average}}"
+      style="--value: ; background: conic-gradient(#28a745 var(--value), #e9ecef 0);">
+      <span class="text-success fs-1 fw-bold" id="progressText"></span>
+      </div>
+      </div>
+    @else
+      <span>Pemakaian boros, berhematlah!</span>
+      <div class="d-flex justify-content-center">
+      <div class="progress-circle my-2" id="progressCircle"
+      data-value="{{($target->usage / $target->countDays) / $target->average}}"
+      style="--value: ; background: conic-gradient(#dc3545 var(--value), #e9ecef 0);">
+      <span class="text-danger fs-1 fw-bold" id="progressText"></span>
+      </div>
+      </div>
+    @endif
+      <div class="text-start mx-2">
+        <span>Target total: {{$target->value}} kWh</span><br>
+        <span>Target harian: {{$target->average}} kWh/hari</span><br>
+        <span>Waktu: {{$target->start}} - {{$target->end}}</span><br>
+        <span>Progres: {{$target->countDays}}/{{$target->days}} hari ({{$target->usage}} kWh)</span><br>
+        <span>Input harian</span><br>
+        @if ($target->countDays < $target->days)
+      <form action="{{ route('targetUpdate', $target->id) }}" method="POST">
+      @csrf
+      @method('PATCH')
+      <input type="text" class="" name="usage" id="usage" inputmode="numeric"
+      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" required />
+      <button type="submit" class="btn btn-transparent">
+      <i class="fas fa-check-square fs-3 text-primary"></i>
+      </button>
+      </form>
+    @else
+    <input type="text" inputmode="numeric"
+    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" disabled />
+    <button class="btn btn-transparent border border-white" disabled>
+      <i class="fas fa-check-square fs-3 text-primary"></i>
+      </button>
+  @endif
+      </div>
+      </div>
+      </div>
+    @endforeach
+      </div>
+    </div>
+    </div>
+  @endif
 </div>
+@endsection
+
+@section('style')
+<style>
+  .progress-circle {
+    position: relative;
+    width: 50%;
+    padding-bottom: 50%;
+    border-radius: 50%;
+    background: conic-gradient(#007bff var(--value), #e9ecef 0);
+  }
+
+  .progress-circle::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    background: white;
+  }
+
+  .progress-circle span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+</style>
 @endsection
 
 @section('script')
 <script>
-  $document.ready(function () {
-    $("#parameter").change(function () {
-      var parameter = $(this).val();
-      if (parameter === "target-pemakaian") {
-        $("#labelAngkaTarget").text("Target daya (kWh):");
-      } else if (parameter === "hitung-pemakaian") {
-        $("#labelAngkaTarget").text("Target biaya (Rupiah):");
-      }
-    });
+  document.addEventListener('DOMContentLoaded', function () {
+    let progressCircle = document.getElementById('progressCircle');
+    let progressText = document.getElementById('progressText');
+    let progressValue = progressCircle.getAttribute('data-value');
+
+    // Ubah nilai menjadi persen
+    let progressPercentage = (parseFloat(progressValue) * 100).toFixed(0);
+
+    progressCircle.style.setProperty('--value', `${progressPercentage}%`);
+    progressText.textContent = `${progressPercentage}%`;
   });
 </script>
 @endsection

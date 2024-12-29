@@ -50,11 +50,11 @@
       class="sidebar h-100 position-fixed top-0 bg-light overflow-x-hidden p-4 d-flex flex-column justify-content-between"
       style="width: 300px; right: -300px; transition: 0.3s; z-index: 1000">
       <div>
-        <table>
+        <table class="w-100">
           <tr>
             <td class="d-flex justify-content-center">
-              <img src="{{asset('images/profiles/' . Auth::user()->picture)}}" class="w-50"
-                style="border-radius: 100%" />
+              <img src="{{asset('images/profiles/' . Auth::user()->picture)}}" class=""
+                style="border-radius: 100%; object-fit: cover; height: 200px; width: 200px;" />
             </td>
           </tr>
           <tr>

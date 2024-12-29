@@ -49,3 +49,7 @@ Beranda
 @section('script')
 @yield('script')
 @endsection
+
+@section('style')
+@yield('style')
+@endsection
