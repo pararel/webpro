@@ -1,14 +1,16 @@
 <div class="fitur komunitas px-4 py-2">
   <div class="mb-2">
-    <form class="w-100 d-flex">
-      <input type="text" class="textKomunitas w-100 me-2 rounded-2" placeholder="Ceritakan hari-harimu!" />
-      <button type="button" class="btn btn-primary rounded-5">
+    <form class="w-100 d-flex" action="{{ Auth::user()->is_admin === 'yes' ? route('adminCommunity') : route('community') }}" method="POST">
+      @csrf
+      <input type="text" class="textKomunitas w-100 me-2 rounded-2" id="content" name="content"
+        placeholder="Ceritakan hari-harimu!" />
+      <button type="submit" class="btn btn-primary rounded-5">
         <i class="fas fa-location-arrow"></i>
       </button>
     </form>
   </div>
   <div id="postContainerKomunitas" class="overflow-y-auto" style="height: 60vh">
-    <div class="post bg-white p-2 my-2 rounded-2 me-1">
+    <div class="bg-white p-2 mt-2 me-1 shadow-sm">
       <div class="d-flex mb-3">
         <img src="{{asset('images/guest.webp')}}" class="rounded-5 me-2" style="height: 30px" />
         <h5>orang.lain</h5>
