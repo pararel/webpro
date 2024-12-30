@@ -49,4 +49,21 @@ class Account extends Authenticatable
     {
         $this->increment('all_targets');
     }
+    public function decrementLikes()
+    {
+        $this->decrement('likes');
+    }
+    public function incrementLikes()
+    {
+        $this->increment('likes');
+    }
+
+    public function incrementPostLiked($amount = 1)
+    {
+        $this->increment('post_liked', $amount);
+    }
+    public function decrementPostLiked($amount = 1)
+    {
+        $this->decrement('post_liked', $amount);
+    }
 }

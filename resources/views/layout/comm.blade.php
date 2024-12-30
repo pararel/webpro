@@ -37,10 +37,12 @@
       <i class="fs-5 far fa-star"></i>
     @endif
     </button>
+    <span>{{$post->likes}}</span>
     </form>
     <button class="btn btn-transparent" onclick="toggleCommentPanel({{ $post->id }})">
     <i class="fs-5 ms-2 far fa-comment"></i>
     </button>
+    <span>{{$post->comments}}</span>
     <br>
     <div class="w-100 d-flex justify-content-between">
     <span class="text-secondary ">{{$post->created_at}}</span>

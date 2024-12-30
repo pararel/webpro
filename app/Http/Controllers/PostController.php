@@ -43,7 +43,7 @@ class PostController extends Controller
         $user = Auth::user();
         $user->incrementPosts();
         History::create([
-            'message' => 'Anda memngunggah postingan di komunitas.',
+            'message' => 'Anda mengunggah postingan di komunitas.',
             'info' => 'post',
             'id_acc' => Auth::id(),
         ]);
@@ -56,13 +56,20 @@ class PostController extends Controller
 
     public function destroy($id)
     {
-        $posts = Post::findOrFail($id);
+        $post = Post::findOrFail($id);
+        $favorites = Favorite::where('id_post', $post->id)->get();
+        foreach ($favorites as $favorite) {
+            $user = $favorite->account;
+            $user->decrementLikes();
+        }
         History::create([
             'message' => 'Anda menghapus unggahan anda.',
             'info' => 'post',
             'id_acc' => Auth::id(),
         ]);
-        $posts->delete();
+        $postOwner = $post->account;
+        $postOwner->decrementPostLiked($post->comments()->count());
+        $post->delete();
 
         $user = Auth::user();
         $user->decrementPosts();
@@ -77,8 +84,13 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($postId);
         $favorite = Favorite::where('id_acc', Auth::id())->where('id_post', $postId)->first();
+        $user = Auth::user();
+        $postOwner = $post->account;
         if ($favorite) {
             $favorite->delete();
+            $user->decrementLikes();
+            $post->decrementLikes();
+            $postOwner->decrementPostLiked(1);
             History::create([
                 'message' => 'Anda menghapus postingan ' . $post->account->username . ' dari favorit',
                 'info' => 'post',
@@ -86,9 +98,15 @@ class PostController extends Controller
             ]);
             $message = 'Removed from favorites successfully.';
         } else {
-            Favorite::create(['id_acc' => Auth::id(), 'id_post' => $postId,]);
+            Favorite::create([
+                'id_acc' => Auth::id(),
+                'id_post' => $postId,
+            ]);
+            $user->incrementLikes();
+            $post->incrementLikes();
+            $postOwner->incrementPostLiked(1);
             $message = 'Added to favorites successfully.';
-            
+
             History::create([
                 'message' => 'Anda menyimpan postingan ' . $post->account->username . ' ke favorit',
                 'info' => 'post',
@@ -111,7 +129,7 @@ class PostController extends Controller
         $comment->id_acc = Auth::id();
         $comment->id_post = $postId;
         $comment->save();
-
+        $post->incrementComments();
         History::create([
             'message' => 'Anda menambah komen anda di postingan ' . $post->account->username . '.',
             'info' => 'post',
@@ -126,13 +144,14 @@ class PostController extends Controller
 
     public function destroyComment($id)
     {
-        
+
         $comment = Comment::findOrFail($id);
         $post = $comment->post;
         if ($comment->id_acc == Auth::id()) {
             $comment->delete();
+            $post->decrementComments();
             History::create([
-                'message' => 'Anda menghapus komen anda dari postingan '.$post->account->username.'.',
+                'message' => 'Anda menghapus komen anda dari postingan ' . $post->account->username . '.',
                 'info' => 'post',
                 'id_acc' => Auth::id(),
             ]);
