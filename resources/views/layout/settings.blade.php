@@ -1,12 +1,3 @@
-@if ($errors->any())
-  <div>
-    <ul>
-    @foreach ($errors->all() as $error) 
-    <li>{{ $error }}</li>
-  @endforeach
-    </ul>
-  </div>
-@endif
 <div class="p-2 mx-3">
   <a class="toggle-button fs-5" data-toggle="collapse" href="#description1" role="button" aria-expanded="false"
     aria-controls="description1"> <i class="fas fa-chevron-right" id="icon1"></i> Edit profil </a>

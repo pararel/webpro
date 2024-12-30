@@ -44,6 +44,20 @@
       </div>
     </div>
     <div>
+      @if (session('success'))
+      <div class="p-2 text-success border border-success rounded-2 m-3" style="background-color: #aaffaa;">
+      {{ session('success') }}
+      </div>
+    @endif
+      @if ($errors->any())
+      <div class="p-2 text-danger border border-danger rounded-2 m-3" style="background-color: #ffaaaa;">
+      <ul>
+        @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+    @endforeach
+      </ul>
+      </div>
+    @endif
       @yield('content')
     </div>
     <div

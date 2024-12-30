@@ -44,6 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
     Route::post('/updateProfile', [AccountController::class, 'updateProfile'])->name('updateProfile');
     Route::post('/updatePassword', [AccountController::class, 'updatePassword'])->name('updatePassword');
+    Route::post('/favorite/{postId}', [PostController::class, 'toggleFavorite'])->name('favorite');
+    Route::post('/comment/{postId}', [PostController::class, 'addComment'])->name('comment');
+    Route::delete('/comment/{id}', [PostController::class, 'destroyComment'])->name('commentDestroy');
 });
 Route::get('/', function () {
     return view('main.welcome');

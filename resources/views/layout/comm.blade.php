@@ -28,8 +28,20 @@
     </div>
     <div class="mb-3 text-secondary">
     </div>
-    <i class="likeExample fs-5 far fa-heart"></i>
-    <i class="fs-5 ms-2 far fa-comment"></i><br>
+    <form action="{{ route('favorite', $post->id) }}" method="POST" style="display:inline;">
+    @csrf
+    <button type="submit" class="btn btn-transparent">
+      @if ($post->is_favorite)
+      <i class="text-warning fs-5 fas fa-star"></i>
+    @else
+      <i class="fs-5 far fa-star"></i>
+    @endif
+    </button>
+    </form>
+    <button class="btn btn-transparent" onclick="toggleCommentPanel({{ $post->id }})">
+    <i class="fs-5 ms-2 far fa-comment"></i>
+    </button>
+    <br>
     <div class="w-100 d-flex justify-content-between">
     <span class="text-secondary ">{{$post->created_at}}</span>
     @if ($post->account->username == Auth::user()->username)
@@ -46,9 +58,48 @@
     </span>
   @endif
     </div>
-
+    <div id="comment-panel-{{ $post->id }}" class="comment-panel bg-light mt-2 p-2" style="display: none;">
+    <form action="{{ route('comment', $post->id) }}" method="POST">
+      @csrf
+      <input type="text" id="reply" name="reply" placeholder="Balas di komentar!" required></input>
+      <button type="submit" class="btn btn-primary rounded-5" style="">
+      <i class="fs-6 fas fa-location-arrow"></i>
+      </button>
+    </form>
+    @foreach ($post->comments()->get() as $comment)
+    <div class="d-flex">
+      <img src="{{ asset('images/profiles/' . $comment->account->picture) }}" class="rounded-5 me-2"
+      style="height: 20px; width: 20px; object-fit: cover;" />
+      <h6>{{$comment->account->username}}</h6>
     </div>
+    <div class="">
+      <span>{{$comment->reply}}</span>
+    </div>
+    @if ($comment->account->id == Auth::id())
+    <form action="{{ route('commentDestroy', $comment->id) }}" method="POST" style="display:inline;">
+      @csrf
+      @method('DELETE')
+      <button type="submit" class="btn btn-transparent mb-2"
+      onclick="return confirm('Apakah anda yakin ingin menghapus komen ini?')" style="width:10px;">
+      <i class="far fa-trash-alt"></i>
+      </button>
+    </form>
+    @endif
+  @endforeach
+    </div>
+    </div>
+
   @endforeach
 @endif
   </div>
 </div>
+<script>
+  function toggleCommentPanel(postId) {
+    var panel = document.getElementById('comment-panel-' + postId);
+    if (panel.style.display === 'none') {
+      panel.style.display = 'block';
+    } else {
+      panel.style.display = 'none';
+    }
+  }
+</script>

@@ -23,18 +23,6 @@ Bantuan
 @section('content')
 <section class="bantuan px-4">
   <div class="">
-    @if (session('success'))
-    <div> {{ session('success') }} </div>
-  @endif
-    @if ($errors->any())
-    <div>
-      <ul>
-      @foreach ($errors->all() as $error)
-      <li>{{ $error }}</li>
-    @endforeach
-      </ul>
-    </div>
-  @endif
     <form action="{{route('faq')}}" method="post">
       @csrf
       <div class="mt-3">

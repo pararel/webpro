@@ -6,20 +6,6 @@ text-warning text-secondary fw-bold
 
 @section('content')
 <div class="py-2 px-4">
-  @if (session('success'))
-    <div>
-    {{ session('success') }}
-    </div>
-  @endif
-  @if ($errors->any())
-    <div>
-    <ul>
-      @foreach ($errors->all() as $error)
-      <li>{{ $error }}</li>
-    @endforeach
-    </ul>
-    </div>
-  @endif
   <form action="{{route('adminNews')}}" method="post" enctype="multipart/form-data">
     @csrf
     <table>
