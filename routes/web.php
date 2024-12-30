@@ -8,12 +8,11 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TargetController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\DashboardController;
 
 Route::middleware('auth')->group(function () {
     Route::middleware('check.user')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('user.dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->name('dashboard');
         Route::get('/history', [HistoryController::class, 'index'])->name('history');
         Route::get('/target', [TargetController::class, 'showTarget'])->name('target');
         Route::post('/target', [TargetController::class, 'store'])->name('targetStore');
@@ -44,13 +43,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/comment/{postId}', [PostController::class, 'addComment'])->name('comment');
     Route::delete('/comment/{id}', [PostController::class, 'destroyComment'])->name('commentDestroy');
 });
-Route::get('/', function () {
-    return view('main.welcome');
-})->name('welcome');
+
 
 Route::middleware(['guest'])->group(function(){
     Route::get('/signup', [AccountController::class, 'showSignupForm'])->name('signup');
     Route::post('/signup', [AccountController::class, 'signup']);
     Route::get('/login', [AccountController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AccountController::class, 'login']);
+    Route::get('/', function () {
+        return view('main.welcome');
+    })->name('welcome');
 });

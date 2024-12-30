@@ -59,15 +59,15 @@
   @endif
     </div>
     <div id="comment-panel-{{ $post->id }}" class="comment-panel bg-light mt-2 p-2" style="display: none;">
-    <form action="{{ route('comment', $post->id) }}" method="POST">
+    <form action="{{ route('comment', $post->id) }}" method="POST" class="d-flex">
       @csrf
-      <input type="text" id="reply" name="reply" placeholder="Balas di komentar!" required></input>
+      <input type="text" id="reply" name="reply" placeholder="Balas di komentar!" class="w-100 me-2"required></input>
       <button type="submit" class="btn btn-primary rounded-5" style="">
       <i class="fs-6 fas fa-location-arrow"></i>
       </button>
     </form>
     @foreach ($post->comments()->get() as $comment)
-    <div class="d-flex">
+    <div class="d-flex mt-3">
       <img src="{{ asset('images/profiles/' . $comment->account->picture) }}" class="rounded-5 me-2"
       style="height: 20px; width: 20px; object-fit: cover;" />
       <h6>{{$comment->account->username}}</h6>

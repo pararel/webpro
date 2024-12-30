@@ -103,7 +103,7 @@ text-warning text-secondary fw-bold
       <div class="row d-flex justify-content-center text-center">
       @foreach ($targets as $target)
       <div class="p-1 col-md-4">
-      <div class="bg-white shadow-sm">
+      <div class="bg-white shadow">
       <h3>Target #{{$target->id}}</h3>
       @if ($target->countDays == 0)
       <span>input pemakaian anda di bawah!</span>
@@ -217,7 +217,6 @@ text-warning text-secondary fw-bold
     let progressText = document.getElementById('progressText');
     let progressValue = progressCircle.getAttribute('data-value');
 
-    // Ubah nilai menjadi persen
     let progressPercentage = (parseFloat(progressValue) * 100).toFixed(0);
 
     progressCircle.style.setProperty('--value', `${progressPercentage}%`);
