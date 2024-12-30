@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Account;
+use App\Models\History;
 
 class AccountController extends Controller
 {
@@ -44,7 +45,7 @@ class AccountController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            if ($user->is_admin === 'no'){
+            if ($user->is_admin === 'no') {
                 return redirect()->route('dashboard');
             } else {
                 return redirect()->route('adminDashboard');
@@ -87,13 +88,17 @@ class AccountController extends Controller
         $user->username = $request->username;
 
         if ($request->hasFile('picture')) {
-            $imageName = date('Y-m-d-H-i-s').'.'.$request->picture->extension();
+            $imageName = date('Y-m-d-H-i-s') . '.' . $request->picture->extension();
             $request->picture->move(public_path('images/profiles'), $imageName);
             $user->picture = $imageName;
         }
 
         $user->save();
-
+        History::create([
+            'message' => 'Anda memperbarui profil akun anda',
+            'info' => 'account',
+            'id_acc' => Auth::id(),
+        ]);
         if ($user->is_admin === 'yes') {
             return redirect()->route('adminSettings')->with('success', 'Profile updated successfully.');
         } else {
@@ -108,12 +113,16 @@ class AccountController extends Controller
             'current_password' => 'required|string',
         ]);
         $user = Auth::user();
-        if (!Hash::check($request->current_password, $user->password)) { 
+        if (!Hash::check($request->current_password, $user->password)) {
             return back()->withErrors(['current_password' => 'Current password is incorrect']);
-        } 
+        }
         $user->password = Hash::make($request->new_password);
         $user->save();
-
+        History::create([
+            'message' => 'Anda memperbarui kata sandi akun anda',
+            'info' => 'account',
+            'id_acc' => Auth::id(),
+        ]);
         if ($user->is_admin === 'yes') {
             return redirect()->route('adminSettings')->with('success', 'Password updated successfully.');
         } else {

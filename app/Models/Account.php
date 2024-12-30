@@ -28,4 +28,25 @@ class Account extends Authenticatable
         'remember_token',
     ];
     protected $table = 'accounts';
+
+    public function incrementPosts()
+    {
+        $this->increment('posts');
+    }
+    public function decrementPosts()
+    {
+        $this->decrement('posts');
+    }
+    public function incrementCurrentTargets()
+    {
+        $this->increment('current_targets');
+    }
+    public function decrementCurrentTargets()
+    {
+        $this->decrement('current_targets');
+    }
+    public function incrementAllTargets()
+    {
+        $this->increment('all_targets');
+    }
 }

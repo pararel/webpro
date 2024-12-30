@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Feedback;
+use App\Models\History;
 use Illuminate\Support\Facades\Auth;
 
 class FeedbackController extends Controller
@@ -23,7 +24,11 @@ class FeedbackController extends Controller
         $feedback->id_user = Auth::id();
         $feedback->message = $request->message;
         $feedback->save();
-
+        History::create([
+            'message' => 'Anda memberi masukan.',
+            'info' => 'feedback',
+            'id_acc' => Auth::id(),
+        ]);
         return redirect()->route('faq')->with('success', 'Feedback submitted successfully.');
     }
 

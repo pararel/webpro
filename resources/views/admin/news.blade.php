@@ -28,7 +28,7 @@ text-warning text-secondary fw-bold
           <label for="title" class="">Judul Berita:</label>
         </td>
         <td>
-          <input type="text" class="bg-warning w-100" name="title" id="title" required />
+          <input type="text" class=" w-100" name="title" id="title" required />
         </td>
       </tr>
       <tr>
@@ -36,7 +36,7 @@ text-warning text-secondary fw-bold
           <label for="description" class="">Deskripsi Singkat:</label>
         </td>
         <td>
-          <input type="text" class="bg-warning w-100" name="description" id="description" required />
+          <input type="text" class=" w-100" name="description" id="description" required />
         </td>
       </tr>
       <tr>
@@ -53,7 +53,7 @@ text-warning text-secondary fw-bold
             eksternal:</label>
         </td>
         <td>
-          <input type="text" class="bg-warning w-100" name="link" id="link" required />
+          <input type="text" class=" w-100" name="link" id="link" required />
         </td>
       </tr>
     </table>

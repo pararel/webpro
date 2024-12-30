@@ -102,11 +102,11 @@ text-warning text-secondary fw-bold
     <div class="container-fluid">
       <div class="row d-flex justify-content-center text-center">
       @foreach ($targets as $target)
-      <div class="p-2 col-sm-3">
+      <div class="p-1 col-md-4">
       <div class="bg-white shadow-sm">
       <h3>Target #{{$target->id}}</h3>
       @if ($target->countDays == 0)
-      <span>input pemakaian harian anda di bawah!</span>
+      <span>input pemakaian anda di bawah!</span>
       <div class="d-flex justify-content-center">
       <div class="progress-circle my-2" id="progressCircle" data-value="0" style="--value: ">
       <span class="text-secondary fs-1 fw-bold" id="progressText">0%</span>
@@ -117,8 +117,9 @@ text-warning text-secondary fw-bold
       <div class="d-flex justify-content-center">
       <div class="progress-circle my-2" id="progressCircle"
       data-value="{{($target->usage / $target->countDays) / $target->average}}"
-      style="--value: ; background: conic-gradient(#28a745 var(--value), #e9ecef 0);">
-      <span class="text-success fs-1 fw-bold" id="progressText"></span>
+      style="--value: {{number_format(100 * ($target->usage / $target->countDays) / $target->average, 2)}}%; background: conic-gradient(#28a745 var(--value), #e9ecef 0);">
+      <span class="text-success fs-1 fw-bold"
+      id="progressText">{{round(100 * ($target->usage / $target->countDays) / $target->average)}}%</span>
       </div>
       </div>
     @else
@@ -126,8 +127,9 @@ text-warning text-secondary fw-bold
       <div class="d-flex justify-content-center">
       <div class="progress-circle my-2" id="progressCircle"
       data-value="{{($target->usage / $target->countDays) / $target->average}}"
-      style="--value: ; background: conic-gradient(#dc3545 var(--value), #e9ecef 0);">
-      <span class="text-danger fs-1 fw-bold" id="progressText"></span>
+      style="--value: {{number_format(100 * ($target->usage / $target->countDays) / $target->average, 2)}}%; background: conic-gradient(#dc3545 var(--value), #e9ecef 0);">
+      <span class="text-danger fs-1 fw-bold"
+      id="progressText">{{round(100 * ($target->usage / $target->countDays) / $target->average)}}%</span>
       </div>
       </div>
     @endif
@@ -141,19 +143,30 @@ text-warning text-secondary fw-bold
       <form action="{{ route('targetUpdate', $target->id) }}" method="POST">
       @csrf
       @method('PATCH')
-      <input type="text" class="" name="usage" id="usage" inputmode="numeric"
+      <input type="text" class="" name="usage" id="usage" inputmode="numeric" class="w-100"
       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" required />
       <button type="submit" class="btn btn-transparent">
       <i class="fas fa-check-square fs-3 text-primary"></i>
       </button>
       </form>
+      <form action="{{ route('targetDestroy', $target->id) }}" method="POST" style="display:inline;">
+      @csrf
+      @method('DELETE')
+      <button type="submit" class="btn btn-danger mb-2"
+      onclick="return confirm('Apakah anda yakin ingin menghapus target ini?')">
+      <i class="far fa-trash-alt"></i></button>
+      </form>
     @else
     <input type="text" inputmode="numeric"
     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" disabled />
     <button class="btn btn-transparent border border-white" disabled>
-      <i class="fas fa-check-square fs-3 text-primary"></i>
-      </button>
+    <i class="fas fa-check-square fs-3 text-primary"></i>
+    </button><br>
+    <button class="btn btn-danger mb-2" disabled>
+    <i class="far fa-trash-alt"></i>
+    </button>
   @endif
+
       </div>
       </div>
       </div>

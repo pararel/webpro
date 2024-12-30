@@ -7,6 +7,7 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TargetController;
+use App\Http\Controllers\HistoryController;
 
 Route::get('/signup', [AccountController::class, 'showSignupForm'])->name('signup');
 Route::post('/signup', [AccountController::class, 'signup']);
@@ -17,12 +18,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', function () {
             return view('user.dashboard');
         })->name('dashboard');
-        Route::get('/history', function () {
-            return view('user.history');
-        })->name('history');
+        Route::get('/history', [HistoryController::class, 'index'])->name('history');
         Route::get('/target', [TargetController::class, 'showTarget'])->name('target');
         Route::post('/target', [TargetController::class, 'store'])->name('targetStore');
-        Route::patch('/targets/{id}', [TargetController::class, 'update'])->name('targetUpdate');
+        Route::patch('/target/{id}', [TargetController::class, 'update'])->name('targetUpdate');
+        Route::delete('/target/{id}', [TargetController::class, 'destroy'])->name('targetDestroy');
         Route::get('/community', [PostController::class, 'showCommunity'])->name('community');
         Route::post('/community', [PostController::class, 'storePost']);
         Route::delete('/community/{id}', [PostController::class, 'destroy'])->name('communityDelete');

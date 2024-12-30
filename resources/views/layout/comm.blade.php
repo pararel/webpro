@@ -34,13 +34,15 @@
     <span class="text-secondary ">{{$post->created_at}}</span>
     @if ($post->account->username == Auth::user()->username)
     <span>
-      <form method="POST" style="display:inline;" action="{{ Auth::user()->is_admin === 'yes' ? route('adminCommunityDelete', $post->id) : route('communityDelete', $post->id) }}">
+      <form method="POST" style="display:inline;"
+      action="{{ Auth::user()->is_admin === 'yes' ? route('adminCommunityDelete', $post->id) : route('communityDelete', $post->id) }}">
       @csrf
       @method('DELETE')
       <button type="submit" class="btn btn-transparent"
       onclick="return confirm('Apakah anda yakin ingin menghapus unggahan ini?')" style="height:30px;">
       <i class="far fa-trash-alt"></i>
       </button>
+      </form>
     </span>
   @endif
     </div>

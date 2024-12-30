@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Target;
+use App\Models\History;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +12,7 @@ class TargetController extends Controller
 {
     public function showTarget()
     {
-        $targets = Target::where('id_acc', Auth::id())->get();
+        $targets = Target::where('id_acc', Auth::id())->orderBy('created_at', 'desc')->get();
         return view('user.target', compact('targets'));
     }
 
@@ -54,6 +55,15 @@ class TargetController extends Controller
         $target->id_acc = Auth::id();
         $target->save();
 
+        $user = Auth::user();
+        $user->incrementCurrentTargets();
+        $user->incrementAllTargets();
+
+        History::create([
+            'message' => 'Target #' . $target->id . ' berhasil dibuat.',
+            'info' => 'target',
+            'id_acc' => Auth::id(),
+        ]);
         return redirect()->route('target')->with('success', 'Target created successfully.');
     }
 
@@ -67,8 +77,27 @@ class TargetController extends Controller
         $target->usage = round($target->usage + $request->usage, 2);
         $target->countDays += 1;
         $target->save();
+        History::create([
+            'message' => 'Anda menginput progres sebanyak ' . $request->usage . ' kWh untuk hari ke-' . $target->countDays . " pada Target #" . $target->id,
+            'info' => 'target',
+            'id_acc' => Auth::id(),
+        ]);
 
         return redirect()->route('target')->with('success', 'Target updated successfully.');
+    }
+
+    public function destroy($id)
+    {
+        $target = Target::findOrFail($id);
+        History::create([
+            'message' => 'Anda menghapus Target #' . $target->id,
+            'info' => 'target',
+            'id_acc' => Auth::id(),
+        ]);
+        $target->delete();
+        $user = Auth::user();
+        $user->decrementCurrentTargets();
+        return redirect()->route('target')->with('success', 'Target deleted successfully.');
     }
 
     private function getTypeValue($type)
