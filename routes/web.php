@@ -9,10 +9,6 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\TargetController;
 use App\Http\Controllers\HistoryController;
 
-Route::get('/signup', [AccountController::class, 'showSignupForm'])->name('signup');
-Route::post('/signup', [AccountController::class, 'signup']);
-Route::get('/login', [AccountController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AccountController::class, 'login']);
 Route::middleware('auth')->group(function () {
     Route::middleware('check.user')->group(function () {
         Route::get('/dashboard', function () {
@@ -51,3 +47,10 @@ Route::middleware('auth')->group(function () {
 Route::get('/', function () {
     return view('main.welcome');
 })->name('welcome');
+
+Route::middleware(['guest'])->group(function(){
+    Route::get('/signup', [AccountController::class, 'showSignupForm'])->name('signup');
+    Route::post('/signup', [AccountController::class, 'signup']);
+    Route::get('/login', [AccountController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AccountController::class, 'login']);
+});
