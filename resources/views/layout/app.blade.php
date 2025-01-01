@@ -7,6 +7,8 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/177edb1edd.js" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+  <link href="/css/styles.css" rel="stylesheet" />
   @yield('style')
 </head>
 
@@ -142,24 +144,24 @@
         background: rgba(0, 0, 0, 0.5);
         z-index: 999;
       "></div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"></script>
-    <script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="/js/dashboard/datatables-simple-demo.js"></script>
+    <script> 
       $(document).ready(function () {
         /*sidebar*/
-        $(".toggleSidebar").text("<<<");
+        $(".toggleSidebar").html("<i class='fa-solid fa-caret-left fs-3'></i>");
         $(".toggleSidebar").click(function () {
           var sidebar = $(".sidebar");
           var toggleBtn = $(".toggleSidebar");
 
           if (sidebar.css("right") === "-300px") {
             sidebar.css("right", "0");
-            toggleBtn.css("right", "260px").text(">>>");
+            toggleBtn.css("right", "260px").html("<i class='fa-solid fa-caret-right fs-3'></i>");
             $("#overlay").fadeIn(300);
           } else {
             sidebar.css("right", "-300px");
-            toggleBtn.css("right", "-40px").text("<<<");
+            toggleBtn.css("right", "-40px").html("<i class='fa-solid fa-caret-left fs-3'></i>");
             $("#overlay").fadeOut(300);
           }
         });
