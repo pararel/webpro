@@ -72,7 +72,7 @@ text-warning text-secondary fw-bold
         <h3 class="">Berita</h3>
         <span class="">{{ $latestNews ? $latestNews->title : 'Belum ada berita saat ini.' }}</span>
         @if ($latestNews)
-      <img src="{{ asset('images/news/' . $latestNews->picture) }}" alt="News Image" class="news-image w-100 mt-2">
+      <img src="{{ asset('images/news/' . $latestNews->picture) }}" alt="News Image" class="news-image w-100 mt-2" style="height:30vh;object-fit: cover;">
     @endif
       </div>
       <a class="btn btn-warning m-3 rounded-5 shadow-sm" href="{{route('news')}}">
