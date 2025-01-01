@@ -32,6 +32,10 @@ Admin
 @yield('content')
 @endsection
 
-@section('js')
-@yield('js')
+@section('script')
+@yield('script')
+@endsection
+
+@section('style')
+@yield('style')
 @endsection
