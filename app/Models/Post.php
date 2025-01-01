@@ -23,6 +23,10 @@ class Post extends Model
         return $this->hasMany(Comment::class, 'id_post');
     }
 
+    public function likes(){
+        return $this->likes;
+    }
+
     public function decrementLikes()
     {
         $this->decrement('likes');

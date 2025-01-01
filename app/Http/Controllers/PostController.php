@@ -68,7 +68,7 @@ class PostController extends Controller
             'id_acc' => Auth::id(),
         ]);
         $postOwner = $post->account;
-        $postOwner->decrementPostLiked($post->likes()->count());
+        $postOwner->decrementPostLiked($post->comments()->count());
         $post->delete();
 
         $user = Auth::user();
