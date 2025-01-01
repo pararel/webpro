@@ -13,14 +13,30 @@ Buat Akun
 @endsection
 
 @section('form')
-<form action="{{ route('signup') }}" method="POST">
+<style>
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-up {
+    animation: fadeUp 1s ease-out;
+  }
+</style>
+
+<form action="{{ route('signup') }}" method="POST" class="fade-up">
   @csrf
   <div>
     <input class="form-control mb-2 rounded-5" type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Nickname" required>
   </div>
   <div>
-    <input class="form-control mb-2 rounded-5" type="text" id="username" name="username" value="{{ old('username') }}"
-    placeholder="Username" required>
+    <input class="form-control mb-2 rounded-5" type="text" id="username" name="username" value="{{ old('username') }}" placeholder="Username" required>
   </div>
   <div>
     <input class="form-control mb-2 rounded-5" type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Email" required>
