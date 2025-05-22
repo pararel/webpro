@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Energy Monitoring | Home</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
     <script src="https://kit.fontawesome.com/177edb1edd.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -20,13 +21,13 @@
             font-weight: 500;
             display: flex;
         }
-        
+
         .nav-link {
-            color: rgba(255,255,255,.55) !important;
+            color: rgba(255, 255, 255, .55) !important;
         }
-        
+
         .nav-link.active {
-            color: rgba(255,255,255,.9) !important;
+            color: rgba(255, 255, 255, .9) !important;
         }
 
         .hero-img {
@@ -78,6 +79,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -89,6 +91,7 @@
                 opacity: 0;
                 transform: translateX(-100px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -100,6 +103,7 @@
                 opacity: 0;
                 transform: translateX(100px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -111,6 +115,7 @@
                 opacity: 0;
                 transform: scale(0.5);
             }
+
             to {
                 opacity: 1;
                 transform: scale(1);
@@ -140,7 +145,7 @@
 
         .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .social-icons a {
@@ -156,7 +161,7 @@
         }
 
         .nav-link:hover {
-            color: rgba(255,255,255,1) !important;
+            color: rgba(255, 255, 255, 1) !important;
         }
     </style>
 </head>
@@ -165,20 +170,26 @@
     <header>
         <nav class="navbar navbar-expand-sm bg-dark fixed-top" data-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand fw-bold animate-fade-in-up" href="#">Energy Monitoring</a>
+                <a class="navbar-brand fw-bold animate-fade-in-up" href="#">
+                    <img src="{{ asset('images/emonic_light.png') }}" style="height: 0.7cm;"/>
+                    EMONIC
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link active animate-fade-in-up" style="animation-delay: 0.5s" href="{{route('welcome')}}" aria-current="page">Home</a>
+                            <a class="nav-link active animate-fade-in-up" style="animation-delay: 0.5s"
+                                href="{{route('welcome')}}" aria-current="page">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link animate-fade-in-up" style="animation-delay: 0.6s" href="{{route('signup')}}">Sign Up</a>
+                            <a class="nav-link animate-fade-in-up" style="animation-delay: 0.6s"
+                                href="{{route('signup')}}">Sign Up</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link animate-fade-in-up" style="animation-delay: 0.7s" href="{{route('login')}}">Login</a>
+                            <a class="nav-link animate-fade-in-up" style="animation-delay: 0.7s"
+                                href="{{route('login')}}">Login</a>
                         </li>
                     </ul>
                 </div>
@@ -188,10 +199,12 @@
 
     <main class="mx-5">
         <div class="d-flex align-items-end" style="height: 400px">
-            <img src="{{ asset('images/electricity-bg.jpg')}}" class="hero-img animate-zoom" style="animation-delay: 0.3s;" />
+            <img src="{{ asset('images/electricity-bg.jpg')}}" class="hero-img animate-zoom"
+                style="animation-delay: 0.3s;" />
             <div class="position-absolute bottom-20 ms-3" style="z-index: 2">
                 <h1>
-                    <span class="text-warning fw-bold mt-6 animate-slide-left" style="animation-delay: 0.4s">Switch Off,</span>
+                    <span class="text-warning fw-bold mt-6 animate-slide-left" style="animation-delay: 0.4s">Switch
+                        Off,</span>
                     <br />
                     <span class="text-white fw-bold animate-slide-right" style="animation-delay: 0.6s">Save On!</span>
                 </h1>
@@ -206,7 +219,8 @@
         <div class="d-flex mt-5">
             <div class="row">
                 <div class="col-sm-6 d-flex justify-content-end">
-                    <img src="{{ asset('images/hoki.jpg') }}" class="img-fluid about-img animate-slide-left" style="animation-delay: 0.5s"/>
+                    <img src="{{ asset('images/hoki.jpg') }}" class="img-fluid about-img animate-slide-left"
+                        style="animation-delay: 0.5s" />
                 </div>
                 <div class="col-sm-6 pt-2">
                     <h1 class="animate-slide-right" style="animation-delay: 0.5s">Tentang Kami</h1>
@@ -294,4 +308,5 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 </body>
+
 </html>

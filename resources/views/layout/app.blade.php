@@ -16,7 +16,10 @@
   <header>
     <nav class="navbar navbar-expand-sm bg-dark shadow" data-bs-theme="dark">
       <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="#"> EM </a>
+        <a class="navbar-brand fw-bold animate-fade-in-up" href="#">
+          <img src="{{ asset('images/emonic_light.png') }}" style="height: 0.7cm;" />
+          EMONIC
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span
             class="navbar-toggler-icon"></span> </button>
@@ -144,10 +147,13 @@
         background: rgba(0, 0, 0, 0.5);
         z-index: 999;
       "></div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+      crossorigin="anonymous"></script>
     <script src="/js/dashboard/datatables-simple-demo.js"></script>
-    <script> 
+    <script>
       $(document).ready(function () {
         /*sidebar*/
         $(".toggleSidebar").html("<i class='fa-solid fa-caret-left fs-3'></i>");

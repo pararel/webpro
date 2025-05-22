@@ -23,7 +23,10 @@
   <header>
     <nav class="navbar navbar-expand-sm bg-dark fixed-top" data-bs-theme="dark">
       <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="#"> Energy Monitoring </a>
+        <a class="navbar-brand fw-bold animate-fade-in-up" href="#">
+          <img src="{{ asset('images/emonic_light.png') }}" style="height: 0.7cm;" />
+          EMONIC
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span
             class="navbar-toggler-icon"></span> </button>
